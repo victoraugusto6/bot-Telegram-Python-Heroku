@@ -1,0 +1,50 @@
+import logging
+from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
+import os
+PORT = int(os.environ.get('PORT', 5000))
+
+# Habilitando logging
+logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+                    level=logging.INFO)
+
+logger = logging.getLogger(__name__)
+TOKEN = 'seuToken'
+
+
+def comando(update, context):
+    try:
+
+        message = 'Olá, ' + update.message.from_user.first_name + '! 😆\n\n'
+
+        # Lendo arquivo
+        with open('lista.txt','r') as file:
+            message += file.read()
+
+        context.bot.send_message(
+            chat_id=update.effective_chat.id, text=message)
+    except Exception as e:
+        print(str(e))
+
+
+def main():
+    """Start the bot."""
+    # Crie o Updater e passe a ele o token do seu bot.
+    updater = Updater(TOKEN, use_context=True)
+
+    # Faça com que o dispatcher registre manipuladores
+    dp = updater.dispatcher
+
+    updater.dispatcher.add_handler(CommandHandler('comando', comando))
+
+    # Iniciando bot
+    updater.start_webhook(listen="0.0.0.0",
+                          port=int(PORT),
+                          url_path=TOKEN)
+    updater.bot.setWebhook(
+        'https://seuHerokuUrl.herokuapp.com/' + TOKEN)
+
+    updater.idle()
+
+
+if __name__ == '__main__':
+    main()

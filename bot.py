@@ -17,7 +17,7 @@ def comando(update, context):
         message = 'Olá, ' + update.message.from_user.first_name + '! 😆\n\n'
 
         # Lendo arquivo
-        with open('lista.txt','r') as file:
+        with open('lista.txt', 'r') as file:
             message += file.read()
 
         context.bot.send_message(
@@ -27,11 +27,8 @@ def comando(update, context):
 
 
 def main():
-    """Start the bot."""
-    # Crie o Updater e passe a ele o token do seu bot.
     updater = Updater(TOKEN, use_context=True)
 
-    # Faça com que o dispatcher registre manipuladores
     dp = updater.dispatcher
 
     updater.dispatcher.add_handler(CommandHandler('comando', comando))

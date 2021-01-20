@@ -1,6 +1,7 @@
 import logging
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 import os
+
 PORT = int(os.environ.get('PORT', 5000))
 
 # Habilitando logging
@@ -11,7 +12,7 @@ logger = logging.getLogger(__name__)
 TOKEN = 'seuToken'
 
 
-def comando(update, context):
+def comando_digitado(update, context):
     try:
 
         message = 'Olá, ' + update.message.from_user.first_name + '! 😆\n\n'
@@ -31,7 +32,7 @@ def main():
 
     dp = updater.dispatcher
 
-    updater.dispatcher.add_handler(CommandHandler('comando', comando))
+    updater.dispatcher.add_handler(CommandHandler('comando_digitado', comando_digitado))
 
     # Iniciando bot
     updater.start_webhook(listen="0.0.0.0",

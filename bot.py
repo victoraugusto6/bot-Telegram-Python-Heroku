@@ -15,14 +15,14 @@ TOKEN = 'seuToken'
 def comando_digitado(update, context):
     try:
 
-        message = 'Olá, ' + update.message.from_user.first_name + '! 😆\n\n'
+        message = f'Olá,{update.message.from_user.first_name} + ! 😆\n\n'
 
         # Lendo arquivo
         with open('lista.txt', 'r') as file:
             message += file.read()
 
         context.bot.send_message(
-            chat_id=update.effective_chat.id, text=message)
+            chat_id=update.effective_chat.id, text=message, disable_web_page_preview=True)
     except Exception as e:
         print(str(e))
 
@@ -32,7 +32,8 @@ def main():
 
     dp = updater.dispatcher
 
-    updater.dispatcher.add_handler(CommandHandler('comando_digitado', comando_digitado))
+    updater.dispatcher.add_handler(CommandHandler(
+        'comando_digitado', comando_digitado))
 
     # Iniciando bot
     updater.start_webhook(listen="0.0.0.0",

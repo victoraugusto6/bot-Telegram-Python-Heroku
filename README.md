@@ -17,6 +17,11 @@ Heroku.
 
 * [Bot Father - Telegram](https://telegram.me/BotFather)
 
+### Instalação de dependências
+```
+pipenv install -d
+```
+
 <table style="height: 214px; width: 100%; border-collapse: collapse; margin-left: auto; margin-right: auto;" border="0">
 <tbody>
 <tr style="height: 214px;">

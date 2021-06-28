@@ -1,3 +1,4 @@
+import telegram
 from decouple import config
 from telegram.ext import CommandHandler, Updater
 
@@ -7,14 +8,15 @@ APP_NAME_HEROKU = config('APP_NAME_HEROKU')
 
 
 def comando_digitado(update, context):
-    message = f'Olá, {update.message.from_user.first_name}! 😎\n\n'
+    message = f'Olá, {update.message.from_user.first_name}! 😎\n'
 
     # Lendo arquivo
-    with open('lista.txt', 'r') as file:
+    with open('bot/lista.txt', 'r') as file:
         message += file.read()
 
     context.bot.send_message(
-        chat_id=update.effective_chat.id, text=message, disable_web_page_preview=True)
+        chat_id=update.effective_chat.id, text=message, disable_web_page_preview=True,
+        parse_mode=telegram.ParseMode.HTML)
 
 
 def main():
@@ -29,11 +31,10 @@ def main():
 
         updater.idle()
     else:
-        import os
-        PORT = int(os.environ.get('PORT', 5000))
+        port = int(config('PORT'))
 
         updater.start_webhook(listen="0.0.0.0",
-                              port=int(PORT),
+                              port=int(port),
                               url_path=TELEGRAM_TOKEN)
         updater.bot.setWebhook(f'https://{APP_NAME_HEROKU}.herokuapp.com/{TELEGRAM_TOKEN}')
 
@@ -41,5 +42,5 @@ def main():
 
 
 if __name__ == "__main__":
-    print("Pressione CTRL + C para cancelar.")
+    print("Bot em execução.")
     main()

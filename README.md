@@ -6,13 +6,6 @@ Heroku.
 - Bot para Telegram
 - Hospedado no Heroku
 
-### Imagens do Projeto
-
-<img style="display: block; margin-left: auto; margin-right: auto;" src="https://i.ibb.co/M7pTrzR/bot.png" />
-<br>
-<img style="display: block; margin-left: auto; margin-right: auto;" src="https://i.ibb.co/gDbWcg1/conversa-bot.png" />
-<br>
-
 ### Crie seu Bot no BotFather
 
 * [Bot Father - Telegram](https://telegram.me/BotFather)

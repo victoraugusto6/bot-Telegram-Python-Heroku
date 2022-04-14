@@ -1,4 +1,4 @@
-name: Test
+name: CI
 
 on: [ push ]
 
@@ -20,4 +20,4 @@ jobs:
       - name: Rodar flake8
         uses: py-actions/flake8@v1
         with:
-          checkName: 'flake8_py3'   # NOTE: this needs to be the same as the job name
+          checkName: 'flake8_py3'

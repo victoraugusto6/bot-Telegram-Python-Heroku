@@ -1,22 +1,26 @@
-import telegram
+from pathlib import Path
+
 from decouple import config
+from telegram import ParseMode
 from telegram.ext import CommandHandler, Updater
 
 TELEGRAM_TOKEN = config('TELEGRAM_TOKEN')
 DEBUG = config('DEBUG')
 APP_NAME_HEROKU = config('APP_NAME_HEROKU')
 
+BASE_DIR = Path(__file__).resolve().parent.parent
+
 
 def comando_digitado(update, context):
     message = f'Olá, {update.message.from_user.first_name}! 😎\n'
 
     # Lendo arquivo
-    with open('bot/lista.txt', 'r') as file:
+    with open(f'{BASE_DIR}/bot/cronograma.txt', 'r') as file:
         message += file.read()
 
     context.bot.send_message(
         chat_id=update.effective_chat.id, text=message, disable_web_page_preview=True,
-        parse_mode=telegram.ParseMode.HTML)
+        parse_mode=ParseMode.HTML)
 
 
 def main():
@@ -29,16 +33,13 @@ def main():
     if DEBUG:
         updater.start_polling()
 
-        updater.idle()
     else:
         port = int(config('PORT'))
 
-        updater.start_webhook(listen="0.0.0.0",
-                              port=int(port),
-                              url_path=TELEGRAM_TOKEN)
+        updater.start_webhook(listen="0.0.0.0", port=port, url_path=TELEGRAM_TOKEN)
         updater.bot.setWebhook(f'https://{APP_NAME_HEROKU}.herokuapp.com/{TELEGRAM_TOKEN}')
 
-        updater.idle()
+    updater.idle()
 
 
 if __name__ == "__main__":
